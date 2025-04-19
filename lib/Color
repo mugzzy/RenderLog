@@ -1,0 +1,5 @@
+Color Scheme
+Secondary: const Color(0xFF1E1E1E),         // Dark gray (soft black)
+main: const Color(0xFFFFB74D),       // Soft orange (#FFB74D)
+third: const Color(0xFFBDBDBD),     // Light gray (#BDBDBD)
+
