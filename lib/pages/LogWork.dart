@@ -6,6 +6,40 @@ class LogWorkPage extends StatefulWidget {
 }
 
 class _LogWorkPageState extends State<LogWorkPage> {
+  @override
+  void initState() {
+    super.initState();
+    _hoursController.text = '00:00:00'; // Set default time
+  }
+
+  Widget _buildTimeColumn({
+    required int value,
+    required int max,
+    required ValueChanged<int> onChanged,
+  }) {
+    return Container(
+      width: 80,
+      height: 150,
+      child: ListWheelScrollView.useDelegate(
+        itemExtent: 50,
+        physics: FixedExtentScrollPhysics(),
+        onSelectedItemChanged: onChanged,
+        controller: FixedExtentScrollController(initialItem: value),
+        childDelegate: ListWheelChildBuilderDelegate(
+          builder: (context, index) {
+            if (index > max) return null;
+            return Center(
+              child: Text(
+                index.toString().padLeft(2, '0'),
+                style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
+              ),
+            );
+          },
+        ),
+      ),
+    );
+  }
+
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _taskController = TextEditingController();
   final TextEditingController _hoursController = TextEditingController();
@@ -86,22 +120,66 @@ class _LogWorkPageState extends State<LogWorkPage> {
                 },
               ),
               SizedBox(height: 16),
-              TextFormField(
-                controller: _hoursController,
-                decoration: InputDecoration(
-                  labelText: 'Hours Worked',
-                  border: OutlineInputBorder(),
-                ),
-                keyboardType: TextInputType.number,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter the hours worked';
-                  }
-                  if (double.tryParse(value) == null) {
-                    return 'Please enter a valid number';
-                  }
-                  return null;
-                },
+              SizedBox(height: 16),
+              Text(
+                'Time Worked (HH:MM:SS)',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              ),
+              SizedBox(height: 8),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  _buildTimeColumn(
+                    value: int.tryParse(
+                            _hoursController.text.split(':')[0] ?? '0') ??
+                        0,
+                    max: 23,
+                    onChanged: (val) {
+                      final parts = _hoursController.text.split(':');
+                      final minute = parts.length > 1 ? int.parse(parts[1]) : 0;
+                      final second = parts.length > 2 ? int.parse(parts[2]) : 0;
+                      _hoursController.text =
+                          '${val.toString().padLeft(2, '0')}:${minute.toString().padLeft(2, '0')}:${second.toString().padLeft(2, '0')}';
+                      setState(() {});
+                    },
+                  ),
+                  Text(
+                    ":",
+                    style: TextStyle(fontSize: 60),
+                  ),
+                  _buildTimeColumn(
+                    value: int.tryParse(
+                            _hoursController.text.split(':')[1] ?? '0') ??
+                        0,
+                    max: 59,
+                    onChanged: (val) {
+                      final parts = _hoursController.text.split(':');
+                      final hour = parts.length > 0 ? int.parse(parts[0]) : 0;
+                      final second = parts.length > 2 ? int.parse(parts[2]) : 0;
+                      _hoursController.text =
+                          '${hour.toString().padLeft(2, '0')}:${val.toString().padLeft(2, '0')}:${second.toString().padLeft(2, '0')}';
+                      setState(() {});
+                    },
+                  ),
+                  Text(
+                    ":",
+                    style: TextStyle(fontSize: 60),
+                  ),
+                  _buildTimeColumn(
+                    value: int.tryParse(
+                            _hoursController.text.split(':')[2] ?? '0') ??
+                        0,
+                    max: 59,
+                    onChanged: (val) {
+                      final parts = _hoursController.text.split(':');
+                      final hour = parts.length > 0 ? int.parse(parts[0]) : 0;
+                      final minute = parts.length > 1 ? int.parse(parts[1]) : 0;
+                      _hoursController.text =
+                          '${hour.toString().padLeft(2, '0')}:${minute.toString().padLeft(2, '0')}:${val.toString().padLeft(2, '0')}';
+                      setState(() {});
+                    },
+                  ),
+                ],
               ),
               SizedBox(height: 16),
               Row(
