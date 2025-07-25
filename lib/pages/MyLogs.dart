@@ -28,9 +28,13 @@ class MyLogsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('My Logs'),
-        backgroundColor: const Color(0xFFFFB74D), // Soft orange
+        title: const Text(
+          'My Logs',
+          style: TextStyle(color: Color(0xFFFFB74D)),
+        ),
+        backgroundColor: const Color(0xFF1E1E1E), // Dark gray
       ),
+      backgroundColor: const Color(0xFF1E1E1E),
       body: ListView.builder(
         itemCount: logs.length,
         itemBuilder: (context, index) {

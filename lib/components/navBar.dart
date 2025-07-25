@@ -15,9 +15,9 @@ class CustomNavBar extends StatelessWidget {
     return BottomNavigationBar(
       currentIndex: currentIndex,
       onTap: onTap,
-      backgroundColor: const Color(0xFF1E1E1E), // Dark gray (soft black)
-      selectedItemColor: const Color(0xFFFFB74D), // Soft orange (#FFB74D)
-      unselectedItemColor: const Color(0xFFBDBDBD), // Light gray (#BDBDBD)
+      backgroundColor: Color(0xFFFFFFFF),
+      selectedItemColor: Color(0xFF9333EA),
+      unselectedItemColor: Color(0xFFBDBDBD),
       type: BottomNavigationBarType.fixed, // ensures all labels are shown
       items: const [
         BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),

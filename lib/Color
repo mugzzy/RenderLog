@@ -1,5 +1,14 @@
 Color Scheme
+
 Secondary: const Color(0xFF1E1E1E),         // Dark gray (soft black)
-main: const Color(0xFFFFB74D),       // Soft orange (#FFB74D)
+main: const Color(0xFF9333EA),       // Soft violet (#FFB74D)
 third: const Color(0xFFBDBDBD),     // Light gray (#BDBDBD)
 
+gradient:
+
+decoration: BoxDecoration(
+    gradient: LinearGradient(colors: [
+      Color(0xFF764BA2),
+        Color(0xFF667EEA),
+    ])
+  ),
